@@ -8,12 +8,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
     #[Route('/inscription', name: 'register')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
 
         $user =new User();
@@ -24,6 +25,9 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             $user = $form->getData();
+            $password = $passwordHasher->hashPassword($user, $user->getPassword());
+
+            $user->setPassword($password);
 
             //Je persist
             $entityManager->persist($user);
