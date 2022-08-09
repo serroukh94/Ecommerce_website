@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} - La Boutique Marocaine{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+
+        <div class="col-mad-5">
+            <img src="/uploads/{{ product.illustration }}" alt="{{ product.name }}" class="img-fluid">
+        </div>
+        <div class="col-md-7 my-auto">
+           <h3>{{ product.name }}</h3>
+            <p>{{ product.subtitle }}</p>
+            <span class="product-page-price">{{ (product.prix/ 100) |number_format(2,',', '.') }} $</span>
+            <hr>
+            <p>{{ product.description }}</p>
+            <a href="" class="btn btn-primary"> Ajouter au panier</a>
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
