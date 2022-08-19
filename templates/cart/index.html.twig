@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier - La Boutique Marocaine{% endblock %}
+
+{% block content %}
+    <h1>Mon panier</h1>
+    Retrouvez l'ensemble des produits que vous avez ajouté à votre panier.
+    <hr>
+
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th scope="col">Produit</th>
+            <th scope="col"></th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% set total = null %}
+        {% for product in cart %}
+        <tr>
+            <th>
+                <img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px">
+            </th>
+            <td>{{ product.product.name }}<br>
+               <smal>{{ product.product.subtitle }}</smal>
+            </td>
+
+            <td>{{ product.quantity }}</td>
+
+            <td>{{ (product.product.prix/ 100) |number_format(2,',', '.') }} $</td>
+
+            <td>{{ ((product.product.prix * product.quantity ) / 100) |number_format(2,',', '.') }} $</td>
+        </tr>
+            {% set total = total + (product.product.prix *product.quantity) %}
+        {%  endfor %}
+
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <b>Nombre de produit :   </b> {{ cart | length }} <br>
+        <b>Total de mon panier : </b> {{ (total/ 100) |number_format(2,',', '.') }} $
+        <a href="" class="btn btn-success btn-block" >Valider mon panier</a>
+    </div>
+
+{% endblock %}
