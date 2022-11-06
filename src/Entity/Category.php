@@ -27,7 +27,7 @@ class Category
         $this->products = new ArrayCollection();
     }
 
-    #[Pure] public function __toString(){
+    public function __toString(){
         return $this->getName();
     }
 
